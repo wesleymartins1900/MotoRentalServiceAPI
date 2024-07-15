@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  motorentalservice.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__DefaultConnection=Host=localhost;Port=5432;Username=postgres;Password=p4ssw0rd;Database=motorentaldb;
+    ports:
+      - "8080"
+      - "8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  db:
+    image: postgres:15
+    environment:
+        POSTGRES_DB: motorentaldb
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: p4ssw0rd
+    ports:
+        - "5432:5432"
+    volumes:
+        - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

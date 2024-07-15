@@ -1,0 +1,21 @@
+﻿### Generate Token Request for Admin
+GET http://localhost:5221/api/auth/token/Admin HTTP/1.1
+
+### Generate Token Request for User
+GET http://localhost:5221/api/auth/token/user HTTP/1.1
+
+### Generate Token Request for Invalid Role
+GET http://localhost:5221/api/auth/token/invalidrole HTTP/1.1
+
+### Expected Responses
+#### Status 200 OK
+{
+    "token": "string"
+}
+
+#### Status 400 BadRequest
+{
+    "ErrorMessage": "string"
+}
+
+#### Status 401 Unauthorized

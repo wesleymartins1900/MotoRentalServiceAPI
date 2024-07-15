@@ -1,0 +1,60 @@
+﻿### Registrar uma nova pessoa para entrega
+POST http://localhost:5221/api/DeliveryPerson
+Authorization: Bearer {{authToken}}
+Content-Type: multipart/form-data
+
+--boundary
+Content-Disposition: form-data; name="Name"
+Test
+
+--boundary
+Content-Disposition: form-data; name="Cnpj"
+70.737.190/0001-00
+
+--boundary
+Content-Disposition: form-data; name="CnhNumber"
+123456789
+
+--boundary
+Content-Disposition: form-data; name="CnhType"
+AB
+
+--boundary
+Content-Disposition: form-data; name="CnhImage"; filename="cnh.png"
+Content-Type: image/png
+
+< ./path/to/cnh.png
+--boundary--
+
+### Expected Responses
+#### Status 201 Created
+{
+    "Id": "Guid"
+}
+
+#### Status 400 BadRequest
+{
+    "ErrorMessage": "string"
+
+### Atualizar a imagem da CNH de uma pessoa para entrega
+POST http://localhost:5221/api/DeliveryPerson/cnh
+Authorization: Bearer {{authToken}}
+Content-Type: multipart/form-data
+
+--boundary
+Content-Disposition: form-data; name="Id"
+
+8c2f15a8-9c1e-4f4e-a6d6-1f87d0e70efc
+--boundary
+Content-Disposition: form-data; name="CnhImage"; filename="new_cnh.png"
+Content-Type: image/png
+
+< ./path/to/new_cnh.png
+--boundary--
+
+### Expected Responses
+#### Status 204 NoContent
+#### Status 400 BadRequest
+{
+    "ErrorMessage": "string"
+}

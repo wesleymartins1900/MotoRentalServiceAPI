@@ -1,0 +1,109 @@
+﻿### Register a New Motorcycle
+POST http://localhost:5221/api/moto HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "model": "Ninja ZX-10R",
+    "licensePlate": "123-ABC",
+    "year": 2023
+}
+
+> {% 
+client.log(`Request body for Register Moto: ${request.body}`);
+%}
+
+### Expected Responses
+#### Status 200 OK
+{
+    "id": "guid",
+    "model": "string",
+    "licensePlate": "string",
+    "year": string"
+}
+
+#### Status 400 Bad Request
+{
+    "ErrorMessage": "string"
+}
+
+
+### Retrieve Motorcycles by License Plate
+GET http://localhost:5221/api/moto?plate=123-ABC&pageNumber=1&pageSize=10 HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+> {% 
+client.log(`Request URL for Get Motos: ${request.url}`);
+%}
+
+### Expected Responses
+#### Status 200 OK
+{
+    "items": [
+        {
+            "id": "guid",
+            "model": "string",
+            "licensePlate": "string",
+            "year": "string"
+        }
+    ],
+    "pageNumber": int,
+    "pageSize": int,
+    "totalCount": int
+}
+
+#### Status 404 Not Found
+{
+    "ErrorMessage": "string"
+}
+
+
+### Update an Existing Motorcycle
+PUT http://localhost:5221/api/moto/{{id}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "model": "Ninja ZX-10RR",
+    "licensePlate": "123-ABC",
+    "year": 2024
+}
+
+> {% 
+client.log(`Request body for Update Moto: ${request.body}`);
+client.log(`Request URL for Update Moto: ${request.url}`);
+%}
+
+### Expected Responses
+#### Status 200 OK
+{
+    "id": "guid",
+    "model": "string",
+    "licensePlate": "string",
+    "year": string"
+}
+
+#### Status 400 Bad Request
+{
+    "ErrorMessage": "string"
+}
+
+
+### Delete a Motorcycle
+DELETE http://localhost:5221/api/moto/{{id}} HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+> {% 
+client.log(`Request URL for Delete Moto: ${request.url}`);
+%}
+
+### Expected Responses
+#### Status 200 OK
+{
+    "message": "string"
+}
+
+#### Status 400 Bad Request
+{
+    "ErrorMessage": "string"
+}
