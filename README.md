@@ -10,6 +10,7 @@ Welcome to the **MotoRentalService API** repository! This application provides a
 - [Endpoints](#endpoints)
 - [Additional Features](#additional-features)
   - [Docker](#docker)
+  - [Messaging](#messaging)
   - [Cache](#cache)
   - [Testing](#testing)
 - [Contributing](#contributing)
@@ -31,9 +32,6 @@ To set up the project locally, follow these steps:
    ```bash
    dotnet build
 
-4. Run script for postgres database:
-   [script.sql](./script.sql)
-
 ## Configuration
 
 Ensure that you configure the necessary environment variables and connection strings in the [appsettings.json](./MotoRentalService.Api/appsettings.json) file or via environment variables.
@@ -44,15 +42,21 @@ Ensure that you configure the necessary environment variables and connection str
    ```bash
    dotnet run
 
-2. For Development with Swagger:
+### Authorization Mechanism
+
+The application employs a token-based authorization system to access its endpoints. Users are required to provide a valid authorization token, eliminating the need for hardcoded usernames and passwords.
+
+#### Authorized Roles:
+
+ - Admin: For administrative tasks and access.
+
+ - User: For standard user operations.
+
+### For Development with Swagger:
 
  - To interact with the API using Swagger during development, please follow these steps:
   
    - Generate a token using the appropriate role.
-
-     - Admin: For administrative tasks and access.
-
-     - User: For standard user operations.
 
    - Store the generated token in the "Authorize" field within the Swagger interface.
 
@@ -77,6 +81,20 @@ The application is configured to run in Docker containers, facilitating deployme
 2. Build the Docker image.
 
 3. Run the container.
+
+### Messaging
+
+The application utilizes RabbitMQ for message queuing, enabling reliable and scalable communication between different components or services. RabbitMQ helps manage asynchronous processing, improve system resilience, and ensure that messages are delivered even in case of failures.
+
+#### Docker Integration
+
+If using RabbitMQ with Docker, you can easily run RabbitMQ in a container for development or production environments.
+
+1. Run RabbitMQ Container: Use the following command to start a RabbitMQ container:
+   ```bash
+   docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
+
+2. Access Management Interface: Access RabbitMQ's management interface via http://localhost:15672 to manage queues, exchanges, and monitor message flows.
 
 ### Cache
 
