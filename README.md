@@ -9,7 +9,7 @@ Welcome to the **MotoRentalService API** repository! This application provides a
 - [Usage](#usage)
 - [Endpoints](#endpoints)
 - [Additional Features](#additional-features)
-  - [Migrations](#migrations)  
+  - [Migrations](#migrations-ef-core)  
   - [Docker](#docker)
   - [Messaging](#messaging)
   - [Cache](#cache)
