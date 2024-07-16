@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using MotoRentalService.Infrastructure.Data;
 
 namespace MotoRentalService.Api
@@ -12,7 +13,7 @@ namespace MotoRentalService.Api
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<MotoRentalDbContext>();
-                context.Database.EnsureCreated();
+                context.Database.Migrate();
             }
 
             host.Run();
