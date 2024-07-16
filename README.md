@@ -20,7 +20,7 @@ To set up the project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/new-repo.git
+   git clone [[https://github.com/wesleymartins1900/MotoRentalServiceAPI.git]](https://github.com/wesleymartins1900/MotoRentalServiceAPI.git)
    cd MotoRentalServiceAPI
    
 2. Restore the project's dependencies:
