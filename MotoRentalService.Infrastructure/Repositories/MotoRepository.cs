@@ -73,9 +73,11 @@ namespace MotoRentalService.Infrastructure.Data.Repositories
         public async Task<PagedResult<Moto>> GetMotosAsync(string? plate, int pageNumber, int pageSize)
         {
             var query = _dbContext.Motos.AsQueryable();
-
+            
             if (!string.IsNullOrEmpty(plate))
-                query = query.Where(m => m.Plate.Contains(plate) && !m.Deleted);
+                query = query.Where(m => m.Plate.Contains(plate));
+
+            query = query.Where(m => !m.Deleted);
 
             var totalCount = await query.CountAsync();
 

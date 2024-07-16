@@ -26,7 +26,7 @@ namespace MotoRentalService.Application.Utils.CustomMessages
         public string RentalCreatedSuccessfully(Guid id, string name) => $"Rental created successfully for delivery person '{name}' with ID '{id}'.";
         public string RentalValueCalculatedSuccessfully(Guid rentalId, decimal totalCost) => $"Rental value for Id '{rentalId}' successfully calculated: {totalCost}.";
         public string RentalCalculationError(Guid id) => $"An error occurred while calculating the rental value for Id '{id}'.";
-        public string EndDateBeforeStartDate(DateTime endDate, DateTime startDate) => $"End date '{endDate}' is before the start date '{startDate}'.";
-        internal string InvalidRentalPlanType(DateTime startDate, DateTime endDate) => $"The provided rental period from {startDate.ToShortDateString()} to {endDate.ToShortDateString()} does not match any valid rental plan type.";
+        public string EndDateBeforeStartDate(DateOnly endDate, DateOnly startDate) => $"End date '{endDate.ToString("dd/MM/yyyy")}' is before the start date '{startDate.ToString("dd/MM/yyyy")}'.";
+        internal string InvalidRentalPlanType(DateOnly startDate, DateOnly endDate) => $"The provided rental period from {startDate.ToString("dd/MM/yyyy")} to {endDate.ToString("dd/MM/yyyy")} does not match any valid rental plan type.";
     }
 }

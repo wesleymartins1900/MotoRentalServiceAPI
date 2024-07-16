@@ -121,11 +121,19 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
         public async Task GetMotosAsync_ShouldReturnCachedResult_WhenCacheHit()
         {
             // Arrange
-            var plate = "ABC-1234";
+            var plate = "ABC12345";
             var pageNumber = 1;
             var pageSize = 10;
             var cacheKey = $"GetMotosAsync_{plate}_{pageNumber}_{pageSize}";
-            var cachedResult = new PagedResult<Moto>();
+            var cachedResult = new PagedResult<Moto>()
+            {
+                Items = new List<Moto>()
+                {
+                    new Moto { Plate = plate }
+                },
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
 
             _memoryCache.TryGetValue(cacheKey, out Arg.Any<PagedResult<Moto>>())
                         .Returns(x =>

@@ -78,7 +78,8 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
             { 
                 DeliveryPersonId = Guid.NewGuid(), 
                 MotoId = Guid.NewGuid(),
-                EndDate = DateTime.Now.AddDays(8),
+                EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(8),
+                PlanType = RentalPlanType.SevenDays
             };
 
             _rentalMotoDtoValidator.ValidateAsync(rentalDto).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -100,7 +101,8 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
             { 
                 DeliveryPersonId = Guid.NewGuid(), 
                 MotoId = Guid.NewGuid() ,
-                EndDate = DateTime.Now.AddDays(8)
+                EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(8),
+                PlanType = RentalPlanType.SevenDays
             };
 
             var deliveryPerson = new DeliveryPerson 
@@ -128,7 +130,8 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
             { 
                 DeliveryPersonId = Guid.NewGuid(), 
                 MotoId = Guid.NewGuid(),
-                EndDate = DateTime.Now.AddDays(8)
+                EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(8),
+                PlanType = RentalPlanType.SevenDays
             };
 
             var deliveryPerson = new DeliveryPerson 
@@ -156,8 +159,9 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
             var rentalDto = new RentalMotoDto 
             { 
                 DeliveryPersonId = Guid.NewGuid(), 
-                MotoId = Guid.NewGuid(), 
-                EndDate = DateTime.Now.AddDays(8), 
+                MotoId = Guid.NewGuid(),
+                EndDate = DateOnly.FromDateTime(DateTime.Now).AddDays(8),
+                PlanType = RentalPlanType.SevenDays
             };
 
             var deliveryPerson = new DeliveryPerson 
@@ -216,7 +220,7 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
         {
             // Arrange
             var rentalId = Guid.NewGuid();
-            var endDate = DateTime.Now;
+            var endDate = DateOnly.FromDateTime(DateTime.Now);
 
             _rentalRepository.GetByIdAsync(rentalId).Returns(Task.FromResult((Rental)null));
 
@@ -233,12 +237,12 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
         {
             // Arrange
             var rentalId = Guid.NewGuid();
-            var endDate = DateTime.Now;
+            var endDate = DateOnly.FromDateTime(DateTime.Now);
 
             var rental = new Rental 
             { 
                 Id = rentalId, 
-                StartDate = DateTime.Now.Date.AddDays(2) 
+                StartDate = DateOnly.FromDateTime(DateTime.Now).AddDays(2)
             };
 
             _rentalRepository.GetByIdAsync(rentalId).Returns(Task.FromResult(rental));
@@ -262,7 +266,7 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
         {
             // Arrange
             var rentalId = Guid.NewGuid();
-            var startDate = DateTime.Now.Date.AddDays(1); 
+            var startDate = DateOnly.FromDateTime(DateTime.Now).AddDays(1); 
             var endDate = startDate.AddDays((int)planType); 
             var expectedEndDate = endDate.AddDays(-1); // expected date before end date (EarlyReturn)
 
@@ -275,7 +279,7 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
             };
 
             var calculator = new EarlyReturnRentalCostCalculator();
-            _calculatorFactory.ChooseCalculatorBasedOnReturnDate(Arg.Any<Rental>(), Arg.Any<DateTime>())
+            _calculatorFactory.ChooseCalculatorBasedOnReturnDate(Arg.Any<Rental>(), Arg.Any<DateOnly>())
                 .Returns(calculator);
 
             _rentalRepository.GetByIdAsync(rentalId).Returns(Task.FromResult(rental));
@@ -299,7 +303,7 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
         {
             // Arrange
             var rentalId = Guid.NewGuid();
-            var startDate = DateTime.Now.Date.AddDays(1); 
+            var startDate = DateOnly.FromDateTime(DateTime.Now).AddDays(1);
             var endDate = startDate.AddDays((int)planType); 
             var expectedEndDate = endDate.AddDays(1); // Expected date after end date (LateReturn)
 
@@ -312,7 +316,7 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
             };
 
             var calculator = new LateReturnRentalCostCalculator();
-            _calculatorFactory.ChooseCalculatorBasedOnReturnDate(Arg.Any<Rental>(), Arg.Any<DateTime>())
+            _calculatorFactory.ChooseCalculatorBasedOnReturnDate(Arg.Any<Rental>(), Arg.Any<DateOnly>())
                 .Returns(calculator);
 
             _rentalRepository.GetByIdAsync(rentalId).Returns(Task.FromResult(rental));
@@ -336,7 +340,7 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
         {
             // Arrange
             var rentalId = Guid.NewGuid();
-            var startDate = DateTime.Now.Date.AddDays(1); 
+            var startDate = DateOnly.FromDateTime(DateTime.Now).AddDays(1);
             var endDate = startDate.AddDays((int)planType); 
             var expectedEndDate = endDate; // Expected date equals end date (OnTime)
 
@@ -349,7 +353,7 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
             };
 
             var calculator = new OnTimeReturnRentalCostCalculator();
-            _calculatorFactory.ChooseCalculatorBasedOnReturnDate(Arg.Any<Rental>(), Arg.Any<DateTime>())
+            _calculatorFactory.ChooseCalculatorBasedOnReturnDate(Arg.Any<Rental>(), Arg.Any<DateOnly>())
                 .Returns(calculator);
 
             _rentalRepository.GetByIdAsync(rentalId).Returns(Task.FromResult(rental));

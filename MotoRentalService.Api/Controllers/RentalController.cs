@@ -4,6 +4,7 @@ using MotoRentalService.Api.Abstractions;
 using MotoRentalService.Api.Attributtes;
 using MotoRentalService.Domain.Enums;
 using MotoRentalService.Application.Services.Interfaces;
+using MotoRentalService.Api.Abstractions.Dtos;
 
 namespace MotoRentalService.API.Controllers
 {
@@ -34,13 +35,13 @@ namespace MotoRentalService.API.Controllers
 
                 var result = await _rentalService.RegisterRentalMotoAsync(rentalMotoDto);
                 if (result.IsSuccess)
-                    return CreatedAtAction("Sucesso", new { id = result.Value.Id }, rentalMotoDto);
+                    return Created(nameof(CreateRentalAsync), new { id = result.Value.Id });
 
                 return BadRequest(result.ErrorMessage);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex);
             }
         }
 
@@ -56,19 +57,19 @@ namespace MotoRentalService.API.Controllers
         [HttpPost(ApiRoutes.Rental.CalculateValue)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CalculateRentalValue([FromQuery] Guid id, [FromBody] DateTime endDate)
+        public async Task<IActionResult> CalculateRentalValue([FromRoute] Guid id, [FromBody] CalculateRentalValueDto calculateDto)
         {
             try
             {
-                var result = await _rentalService.RentalValueCalculateAsync(id, endDate);
+                var result = await _rentalService.RentalValueCalculateAsync(id, calculateDto.ExpectedEndDate);
                 if (result.IsSuccess)
-                    return Ok(result.Value);
+                    return Ok(new { TotalCost = result.Value });
 
                 return BadRequest(result.ErrorMessage);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex);
             }
         }
     }

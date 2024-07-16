@@ -8,6 +8,6 @@ namespace MotoRentalService.Application.Services.Interfaces
     {
         Task<bool> ExistsRentalsByMotoIdAsync(Guid MotoId);
         Task<Result<Rental>> RegisterRentalMotoAsync(RentalMotoDto rentalMotoDto);
-        Task<Result<decimal>> RentalValueCalculateAsync(Guid id, DateTime endDate);
+        Task<Result<decimal>> RentalValueCalculateAsync(Guid id, DateOnly endDate);
     }
 }

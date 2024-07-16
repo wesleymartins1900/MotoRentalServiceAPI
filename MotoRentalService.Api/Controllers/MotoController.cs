@@ -36,11 +36,11 @@ namespace MotoRentalService.Api.Controllers
                 if (!result.IsSuccess)
                     return BadRequest(result.ErrorMessage);
 
-                return Ok(result.Value);
+                return Created(nameof(RegisterMotoAsync), new { id = result.Value.Id });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex);
             }
         }
 
@@ -67,7 +67,7 @@ namespace MotoRentalService.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex);
             }
         }
 
@@ -98,7 +98,7 @@ namespace MotoRentalService.Api.Controllers
             }
             catch (Exception ex) 
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex);
             }
         }
 
@@ -125,7 +125,7 @@ namespace MotoRentalService.Api.Controllers
             }
             catch (Exception ex) 
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex);
             }
         }
     }

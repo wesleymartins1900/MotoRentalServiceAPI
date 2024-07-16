@@ -11,7 +11,7 @@
 		"Model" VARCHAR(100) NOT NULL,
 		"Plate" VARCHAR(20) NOT NULL, 
 		-- Plate is not unique due to logical exclusion
-		"Deleted" BIT NOT NULL
+		"Deleted" BOOLEAN NOT NULL
 	);
 
 	CREATE INDEX idx_plate ON "Motos" ("Plate");
@@ -30,8 +30,8 @@
 		"Id" UUID PRIMARY KEY,
 		"MotoId" UUID NOT NULL,
 		"DeliveryPersonId" UUID NOT NULL,
-		"StartDate" DATE NOT NULL,
-		"EndDate" DATE NOT NULL,
+		"StartDate" TIMESTAMP NOT NULL,
+		"EndDate" TIMESTAMP NOT NULL,
 		
 		FOREIGN KEY ("MotoId") REFERENCES "Motos"("Id"),
 		FOREIGN KEY ("DeliveryPersonId") REFERENCES "DeliveryPeople"("Id")

@@ -7,8 +7,8 @@ namespace MotoRentalService.Domain.Entities
         public Guid Id { get; set; }
         public Guid MotoId { get; set; }
         public Guid DeliveryPersonId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateOnly StartDate { get; set; }
+        public DateOnly EndDate { get; set; }
         public RentalPlanType PlanType { get; set; }
     }
 }

@@ -5,6 +5,6 @@ namespace MotoRentalService.Domain.Factories
 {
     public interface IRentalCostCalculatorFactory
     {
-        IRentalCostCalculator ChooseCalculatorBasedOnReturnDate(Rental rental, DateTime returnDate);
+        IRentalCostCalculator ChooseCalculatorBasedOnReturnDate(Rental rental, DateOnly returnDate);
     }
 }

@@ -98,10 +98,15 @@ namespace MotoRentalService.Application.Services
 
             if (_memoryCache.TryGetValue(cacheKey, out PagedResult<Moto> cachedMotos))
             {
-                _logger.LogDebug(_messages.CacheHit(cacheKey, @$"Plate: '{plate}', 
-                                                                 PageNumber: '{pageNumber}', 
-                                                                 PageSize:'{pageSize}'"));
-                return cachedMotos;
+                if (cachedMotos.Items.Count != 0)
+                {
+                    var filteredItems = cachedMotos.Items.Where(m => !m.Deleted).ToList();
+
+                    _logger.LogDebug(_messages.CacheHit(cacheKey, @$"Plate: '{plate}', 
+                                                                     PageNumber: '{pageNumber}', 
+                                                                     PageSize:'{pageSize}'"));
+                    return cachedMotos;
+                }
             }
 
             var result = await _motoRepository.GetMotosAsync(plate, pageNumber, pageSize);

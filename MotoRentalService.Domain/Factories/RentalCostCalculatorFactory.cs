@@ -29,7 +29,7 @@ namespace MotoRentalService.Domain.Factories
         /// <param name="rental">The rental entity containing the expected end date.</param>
         /// <param name="returnDate">The actual return date of the rental.</param>
         /// <returns>An instance of <see cref="IRentalCostCalculator"/> suited for the given return date.</returns>
-        public IRentalCostCalculator ChooseCalculatorBasedOnReturnDate(Rental rental, DateTime returnDate)
+        public IRentalCostCalculator ChooseCalculatorBasedOnReturnDate(Rental rental, DateOnly returnDate)
         {
             if (returnDate < rental.EndDate)
             {

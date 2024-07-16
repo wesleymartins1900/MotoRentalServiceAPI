@@ -7,7 +7,6 @@ using MotoRentalService.CrossCutting.Primitives;
 using MotoRentalService.Application.Services.Interfaces;
 using MotoRentalService.Api.Abstractions.Dtos;
 using MotoRentalService.Api.Attributes;
-using Microsoft.AspNetCore.Http;
 
 namespace MotoRentalService.API.Controllers
 {
@@ -80,7 +79,7 @@ namespace MotoRentalService.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex);
             }
         }
 
@@ -112,7 +111,7 @@ namespace MotoRentalService.API.Controllers
             } 
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex);
             }
         }
     }

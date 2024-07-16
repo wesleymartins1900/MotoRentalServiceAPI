@@ -6,7 +6,7 @@ namespace YourProject.Domain.Calculators
 {
     public abstract class BaseRentalCostCalculator : IRentalCostCalculator
     {
-        public abstract decimal Calculate(Rental rental, DateTime returnDate);
+        public abstract decimal Calculate(Rental rental, DateOnly returnDate);
 
         protected decimal GetDailyRate(RentalPlanType planType)
             => planType switch

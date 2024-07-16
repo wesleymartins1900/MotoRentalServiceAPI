@@ -5,8 +5,8 @@ Authorization: Bearer {{authToken}}
 
 {
     "model": "Ninja ZX-10R",
-    "licensePlate": "123-ABC",
-    "year": 2023
+    "plate": "ABC1234",
+    "year": 2024
 }
 
 > {% 
@@ -19,7 +19,7 @@ client.log(`Request body for Register Moto: ${request.body}`);
     "id": "guid",
     "model": "string",
     "licensePlate": "string",
-    "year": string"
+    "year": int
 }
 
 #### Status 400 Bad Request
@@ -44,7 +44,7 @@ client.log(`Request URL for Get Motos: ${request.url}`);
             "id": "guid",
             "model": "string",
             "licensePlate": "string",
-            "year": "string"
+            "year": int
         }
     ],
     "pageNumber": int,
@@ -65,7 +65,7 @@ Authorization: Bearer {{authToken}}
 
 {
     "model": "Ninja ZX-10RR",
-    "licensePlate": "123-ABC",
+    "plate": "ABC1234",
     "year": 2024
 }
 
@@ -80,7 +80,7 @@ client.log(`Request URL for Update Moto: ${request.url}`);
     "id": "guid",
     "model": "string",
     "licensePlate": "string",
-    "year": string"
+    "year": int
 }
 
 #### Status 400 Bad Request

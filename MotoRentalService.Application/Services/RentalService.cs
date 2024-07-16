@@ -38,7 +38,7 @@ namespace MotoRentalService.Application.Services
         /// <remarks>
         /// Computes the total rental cost by comparing the actual return date with the expected end date of the rental.
         /// </remarks>
-        private async Task<Result<decimal>> CalculateRentalCostAsync(Guid rentalId, DateTime returnDate)
+        private async Task<Result<decimal>> CalculateRentalCostAsync(Guid rentalId, DateOnly returnDate)
         {
             var rental = await _rentalRepository.GetByIdAsync(rentalId);
             if (rental is null)
@@ -60,15 +60,12 @@ namespace MotoRentalService.Application.Services
         /// A <see cref="Result{RentalPlanType}"/> indicating success with the corresponding <see cref="RentalPlanType"/> 
         /// if the number of days is valid, or failure with an error message if the number of days is invalid.
         /// </returns>
-        private Result<RentalPlanType> CheckRentalPlanType(DateTime startDate, DateTime endDate)
+        private Result<RentalPlanType> CheckRentalPlanType(RentalPlanType rentalPlanType)
         {
-            var planTypeDays = (endDate - startDate).Days;
-
-            if (!Enum.IsDefined(typeof(RentalPlanType), planTypeDays))
+            if (!Enum.IsDefined(typeof(RentalPlanType), rentalPlanType))
                 return Result<RentalPlanType>.Failure("Invalid rental plan type.");
 
-            var planType = (RentalPlanType)planTypeDays;
-            return Result<RentalPlanType>.Success(planType);
+            return Result<RentalPlanType>.Success(rentalPlanType);
         }
 
         /// <summary>
@@ -92,8 +89,8 @@ namespace MotoRentalService.Application.Services
                 return Result<Rental>.Failure(listErrosString);
             }
 
-            var startDate = DateTime.Now.Date.AddDays(1);
-            if (!CheckRentalPlanType(startDate, rentalMotoDto.EndDate).IsSuccess)
+            var startDate = DateOnly.FromDateTime(DateTime.Now).AddDays(1);
+            if (!CheckRentalPlanType(rentalMotoDto.PlanType).IsSuccess)
             {
                 _logger.LogWarn(_messages.InvalidRentalPlanType(startDate, rentalMotoDto.EndDate));
                 return Result<Rental>.Failure(_messages.InvalidRentalPlanType(startDate, rentalMotoDto.EndDate));
@@ -132,7 +129,8 @@ namespace MotoRentalService.Application.Services
                 DeliveryPersonId = deliveryPerson.Id,
                 MotoId = moto.Id,
                 StartDate = startDate,
-                EndDate = rentalMotoDto.EndDate
+                EndDate = rentalMotoDto.EndDate,
+                PlanType = rentalMotoDto.PlanType
             };
 
             await _rentalRepository.AddAsync(rental);
@@ -162,7 +160,7 @@ namespace MotoRentalService.Application.Services
         /// <remarks>
         /// Calculates the rental value by determining the total rental days and applying the appropriate cost calculator based on the end date.
         /// </remarks>
-        public async Task<Result<decimal>> RentalValueCalculateAsync(Guid id, DateTime expectedEndDate)
+        public async Task<Result<decimal>> RentalValueCalculateAsync(Guid id, DateOnly expectedEndDate)
         {
             var rental = await _rentalRepository.GetByIdAsync(id);
             if (rental is null)
@@ -171,7 +169,7 @@ namespace MotoRentalService.Application.Services
                 return Result<decimal>.Failure(_messages.NotFound(id));
             }
 
-            var totalDays = (expectedEndDate - rental.StartDate).Days;
+            var totalDays = (expectedEndDate.ToDateTime(TimeOnly.MinValue) - rental.StartDate.ToDateTime(TimeOnly.MinValue)).Days;
             if (totalDays < 0)
             {
                 _logger.LogWarn(_messages.EndDateBeforeStartDate(expectedEndDate, rental.StartDate));

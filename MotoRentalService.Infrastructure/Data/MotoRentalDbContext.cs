@@ -37,6 +37,15 @@ namespace MotoRentalService.Infrastructure.Data
                              .IsRequired();
                         });
 
+            // Configure the PlanType property of the Rental entity to use conversion between string and RentalPlanType
+            modelBuilder.Entity<Rental>()
+                        .Property(r => r.PlanType)
+                        .HasColumnName("PlanType")
+                        .HasConversion(
+                            v => v.ToString(),
+                            v => (RentalPlanType)Enum.Parse(typeof(RentalPlanType), v))
+                        .IsRequired();
+
             base.OnModelCreating(modelBuilder);
         }
     }
