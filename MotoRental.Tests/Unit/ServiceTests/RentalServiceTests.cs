@@ -89,7 +89,7 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
 
             // Assert
             Assert.False(result.IsSuccess);
-            Assert.Contains($"Delivery person with ID '{rentalDto.DeliveryPersonId}' not found.", result.ErrorMessage);
+            Assert.Contains($"Delivery person with Id '{rentalDto.DeliveryPersonId}' not found.", result.ErrorMessage);
         }
 
         [Fact]
@@ -117,7 +117,7 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
 
             // Assert
             Assert.False(result.IsSuccess);
-            Assert.Contains($"Delivery person with ID '{rentalDto.DeliveryPersonId}' does not have a type A license.", result.ErrorMessage);
+            Assert.Contains($"Delivery person with Id '{rentalDto.DeliveryPersonId}' does not have a type A license.", result.ErrorMessage);
         }
 
         [Fact]
@@ -225,7 +225,7 @@ namespace MotoRentalService.Tests.Unit.ServiceTests
 
             // Assert
             Assert.False(result.IsSuccess);
-            Assert.Contains($"Rental with id '{rentalId}' not found.", result.ErrorMessage);
+            Assert.Contains($"Rental with Id '{rentalId}' not found.", result.ErrorMessage);
         }
 
         [Fact]
