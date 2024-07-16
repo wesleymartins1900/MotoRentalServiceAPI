@@ -95,8 +95,8 @@ The application includes unit tests to ensure code quality and functionality.
 ## Contributing
 If you would like to contribute to the project, please follow these steps:
 
-Fork this repository.
-Create a branch for your feature (git checkout -b feature/new-feature).
-Commit your changes (git commit -am 'Add new feature').
-Push to the branch (git push origin feature/new-feature).
-Create a Pull Request.
+1. Fork this repository.
+2. Create a branch for your feature (git checkout -b feature/new-feature).
+3. Commit your changes (git commit -am 'Add new feature').
+4. Push to the branch (git push origin feature/new-feature).
+5. Create a Pull Request.
