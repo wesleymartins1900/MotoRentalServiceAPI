@@ -32,9 +32,6 @@ To set up the project locally, follow these steps:
    ```bash
    dotnet build
 
-4. Run script for postgres database:
-   [script.sql](./script.sql)
-
 ## Configuration
 
 Ensure that you configure the necessary environment variables and connection strings in the [appsettings.json](./MotoRentalService.Api/appsettings.json) file or via environment variables.
@@ -45,15 +42,21 @@ Ensure that you configure the necessary environment variables and connection str
    ```bash
    dotnet run
 
-2. For Development with Swagger:
+### Authorization Mechanism
+
+The application employs a token-based authorization system to access its endpoints. Users are required to provide a valid authorization token, eliminating the need for hardcoded usernames and passwords.
+
+#### Authorized Roles:
+
+ - Admin: For administrative tasks and access.
+
+ - User: For standard user operations.
+
+### For Development with Swagger:
 
  - To interact with the API using Swagger during development, please follow these steps:
   
    - Generate a token using the appropriate role.
-
-     - Admin: For administrative tasks and access.
-
-     - User: For standard user operations.
 
    - Store the generated token in the "Authorize" field within the Swagger interface.
 
