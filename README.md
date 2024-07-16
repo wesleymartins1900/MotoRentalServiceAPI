@@ -78,6 +78,20 @@ The application is configured to run in Docker containers, facilitating deployme
 
 3. Run the container.
 
+### Messaging
+
+The application utilizes RabbitMQ for message queuing, enabling reliable and scalable communication between different components or services. RabbitMQ helps manage asynchronous processing, improve system resilience, and ensure that messages are delivered even in case of failures.
+
+#### Docker Integration
+
+If using RabbitMQ with Docker, you can easily run RabbitMQ in a container for development or production environments.
+
+1. Run RabbitMQ Container: Use the following command to start a RabbitMQ container:
+   ```bash
+   docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
+
+2. Access Management Interface: Access RabbitMQ's management interface via http://localhost:15672 to manage queues, exchanges, and monitor message flows.
+
 ### Cache
 
 The application uses caching to improve the performance of read operations. The cache is configured in Startup.cs and can be adjusted as needed for different usage scenarios.
