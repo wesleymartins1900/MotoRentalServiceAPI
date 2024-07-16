@@ -45,7 +45,7 @@ Ensure that you configure the necessary environment variables and connection str
 
 - To run using docker [Localhost:Docker:5001](https://localhost:5001/swagger/index.html), use the following command:
    ```bash
-   docker-compose up -d --build
+   docker-compose up --build
 
 ### Authorization Mechanism
 
