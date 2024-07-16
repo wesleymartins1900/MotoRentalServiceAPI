@@ -27,14 +27,21 @@ namespace MotoRentalService.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegisterMotoAsync([FromBody] RegisterMotoDto motoDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-            var result = await _motoService.RegisterMotoAsync(motoDto);
-            if (!result.IsSuccess) 
-                return BadRequest(result.ErrorMessage);
-         
-            return Ok(result.Value);
+                var result = await _motoService.RegisterMotoAsync(motoDto);
+                if (!result.IsSuccess)
+                    return BadRequest(result.ErrorMessage);
+
+                return Ok(result.Value);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -50,11 +57,18 @@ namespace MotoRentalService.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetMotosAsync([FromQuery] string? plate = null, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            var pagedResult = await _motoService.GetMotosAsync(plate, pageNumber, pageSize);
-            if (pagedResult.Items.Count is 0)
-                return NotFound();
+            try
+            {
+                var pagedResult = await _motoService.GetMotosAsync(plate, pageNumber, pageSize);
+                if (pagedResult.Items.Count is 0)
+                    return NotFound();
 
-            return Ok(pagedResult);
+                return Ok(pagedResult);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -71,14 +85,21 @@ namespace MotoRentalService.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateMotoAsync([FromRoute] Guid id, [FromBody] UpdateMotoDto motoDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-            var result = await _motoService.UpdateMotoAsync(id, motoDto);
-            if (!result.IsSuccess)
-                return BadRequest(result.ErrorMessage);
+                var result = await _motoService.UpdateMotoAsync(id, motoDto);
+                if (!result.IsSuccess)
+                    return BadRequest(result.ErrorMessage);
 
-            return Ok(result.Value);
+                return Ok(result.Value);
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -94,11 +115,18 @@ namespace MotoRentalService.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteMotoAsync([FromRoute] Guid id)
         {
-            var result = await _motoService.DeleteMotoAsync(id);
-            if (!result.IsSuccess)
-                return BadRequest(result.ErrorMessage);
+            try
+            {
+                var result = await _motoService.DeleteMotoAsync(id);
+                if (!result.IsSuccess)
+                    return BadRequest(result.ErrorMessage);
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

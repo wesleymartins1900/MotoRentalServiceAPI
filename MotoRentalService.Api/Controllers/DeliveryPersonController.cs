@@ -63,18 +63,25 @@ namespace MotoRentalService.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegisterDeliveryPersonAsync([FromForm] RegisterDeliveryPersonWithImageDto registerDeliveryPersonDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-            var imageDto = await ConvertImageFromFormFile(registerDeliveryPersonDto.CnhImage);
-            if (!imageDto.IsSuccess)
-                return BadRequest(imageDto.ErrorMessage);
+                var imageDto = await ConvertImageFromFormFile(registerDeliveryPersonDto.CnhImage);
+                if (!imageDto.IsSuccess)
+                    return BadRequest(imageDto.ErrorMessage);
 
-            var result = await _deliveryPersonService.RegisterDeliveryPersonAsync(registerDeliveryPersonDto, imageDto.Value);
-            if (result.IsSuccess)
-                return Created(nameof(RegisterDeliveryPersonAsync), new { id = result.Value.Id.ToString() });
+                var result = await _deliveryPersonService.RegisterDeliveryPersonAsync(registerDeliveryPersonDto, imageDto.Value);
+                if (result.IsSuccess)
+                    return Created(nameof(RegisterDeliveryPersonAsync), new { id = result.Value.Id.ToString() });
 
-            return BadRequest(result.ErrorMessage);
+                return BadRequest(result.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -91,15 +98,22 @@ namespace MotoRentalService.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateCnhImageAsync([FromForm] UpdateDeliveryPersonWithImageDto updateDeliveryPersonDto)
         {
-            var imageDto = await ConvertImageFromFormFile(updateDeliveryPersonDto.CnhImage);
-            if (!imageDto.IsSuccess)
-                return BadRequest(imageDto.ErrorMessage);
+            try
+            {
+                var imageDto = await ConvertImageFromFormFile(updateDeliveryPersonDto.CnhImage);
+                if (!imageDto.IsSuccess)
+                    return BadRequest(imageDto.ErrorMessage);
 
-            var result = await _deliveryPersonService.UpdateDeliveryPersonAsync(updateDeliveryPersonDto.Id, imageDto.Value);
-            if (result.IsSuccess)
-                return NoContent();
+                var result = await _deliveryPersonService.UpdateDeliveryPersonAsync(updateDeliveryPersonDto.Id, imageDto.Value);
+                if (result.IsSuccess)
+                    return NoContent();
 
-            return BadRequest(result.ErrorMessage);
+                return BadRequest(result.ErrorMessage);
+            } 
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -27,14 +27,21 @@ namespace MotoRentalService.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateRentalAsync([FromBody] RentalMotoDto rentalMotoDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-            var result = await _rentalService.RegisterRentalMotoAsync(rentalMotoDto);
-            if (result.IsSuccess)
-                return CreatedAtAction("Sucesso", new { id = result.Value.Id }, rentalMotoDto);
+                var result = await _rentalService.RegisterRentalMotoAsync(rentalMotoDto);
+                if (result.IsSuccess)
+                    return CreatedAtAction("Sucesso", new { id = result.Value.Id }, rentalMotoDto);
 
-            return BadRequest(result.ErrorMessage);
+                return BadRequest(result.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -51,11 +58,18 @@ namespace MotoRentalService.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CalculateRentalValue([FromQuery] Guid id, [FromBody] DateTime endDate)
         {
-            var result = await _rentalService.RentalValueCalculateAsync(id, endDate);
-            if (result.IsSuccess)
-                return Ok(result.Value);
+            try
+            {
+                var result = await _rentalService.RentalValueCalculateAsync(id, endDate);
+                if (result.IsSuccess)
+                    return Ok(result.Value);
 
-            return BadRequest(result.ErrorMessage);
+                return BadRequest(result.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
