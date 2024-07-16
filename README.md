@@ -38,9 +38,13 @@ Ensure that you configure the necessary environment variables and connection str
 
 ## Usage
 
-1. To run the application, use the following command:
+- To run the application [Localhost:Swagger:5221](https://localhost:5221/swagger/index.html), use the following command:
    ```bash
    dotnet run
+
+- To run using docker [Localhost:Docker:5001](https://localhost:5001/swagger/index.html), use the following command:
+   ```bash
+   docker-compose up -d --build
 
 ### Authorization Mechanism
 
@@ -48,11 +52,13 @@ The application employs a token-based authorization system to access its endpoin
 
 #### Authorized Roles:
 
- - Admin: For administrative tasks and access.
+ ##### Admin
+   For administrative tasks and access.
 
- - User: For standard user operations.
+ ##### User 
+   For standard user operations.
 
-### For Development with Swagger:
+#### For Development with Swagger:
 
  - To interact with the API using Swagger during development, please follow these steps:
   
@@ -70,17 +76,13 @@ For detailed information about the available endpoints, please refer to the [req
 
 ## Additional Features
 
+### Migrations (EF Core)
+
+Migrations are used to manage and apply changes to the database schema over time. In the application, migrations are handled as part of the application's startup process, ensuring that the database schema is up-to-date whenever the application is deployed or updated.
+
 ### Docker
 
 The application is configured to run in Docker containers, facilitating deployment and consistent execution across different environments.
-
-#### How to Use Docker
-
-1. Ensure Docker is installed and running.
-
-2. Build the Docker image.
-
-3. Run the container.
 
 ### Messaging
 
@@ -88,13 +90,9 @@ The application utilizes RabbitMQ for message queuing, enabling reliable and sca
 
 #### Docker Integration
 
-If using RabbitMQ with Docker, you can easily run RabbitMQ in a container for development or production environments.
+The application already integrates RabbitMQ within Docker.
 
-1. Run RabbitMQ Container: Use the following command to start a RabbitMQ container:
-   ```bash
-   docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
-
-2. Access Management Interface: Access RabbitMQ's management interface via http://localhost:15672 to manage queues, exchanges, and monitor message flows.
+Access Management Interface: Access RabbitMQ's management interface via http://localhost:8080 to manage queues, exchanges, and monitor message flows.
 
 ### Cache
 
